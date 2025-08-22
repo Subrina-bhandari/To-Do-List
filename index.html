@@ -1,91 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do</title>
-    <style>
-        body{
-            background-color:antiquewhite;
-            font-family:'Times New Roman', Times, serif;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
-            padding-top: 50px; 
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <style>
+    body {
+      background-color: antiquewhite;
+      font-family: 'Times New Roman', Times, serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 50px;
+    }
 
-        h1{
-            margin-bottom: 20px; 
-        }
+    h1 {
+      margin-bottom: 20px;
+    }
 
-        .container{
-            display: flex; 
-            gap: 10px; 
-        }
+    .container {
+      display: flex;
+      gap: 10px;
+    }
 
-        input{
-            padding: 10px; 
-            border: 1px solid #ccc; 
-            border-radius: 5px; 
-            width: 250px; 
-        }
+    input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 250px;
+    }
 
-        .btn{
-            cursor: pointer; 
-            padding: 10px 20px; 
-            border: none; 
-            background-color: #f08080;
-            color: white;
-            border-radius: 5px; 
-        }
+    .btn {
+      cursor: pointer;
+      padding: 10px 20px;
+      border: none;
+      background-color: #f08080;
+      color: white;
+      border-radius: 5px;
+    }
 
-        .btn:hover{
-            background-color: #d46a6a; 
-        }
+    .btn:hover {
+      background-color: #d46a6a;
+    }
 
-        #task-list{
-            width: 100%; 
-            max-width: 400px; 
-            list-style: none; 
-            padding: 0;
-            margin-top: 20px; 
-        }
+    #task-list {
+      width: 100%;
+      max-width: 400px;
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
 
-        #task-list li{
-            background: white; 
-            padding: 10px;
-            margin-bottom: 5px; 
-            border-radius: 5px; 
-            border: 1px solid #ccc; 
-        }
-    </style>
+    #task-list li {
+      background: white;
+      padding: 10px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .delete-btn {
+      cursor: pointer;
+      background-color: #d46a6a;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .delete-btn:hover {
+      background-color: darkred;
+    }
+  </style>
 </head>
 <body>
-    <h1>To-Do List</h1>
+  <h1>To-Do List</h1>
 
-    <div class="container">
-    <input id="task-input" type="text" placeholder="Enter a task..."> 
-    <button id="add-btn" class="btn">Add</button>  
-    </div>
+  <div class="container">
+    <input id="task-input" type="text" placeholder="Enter a task...">
+    <button id="add-btn" class="btn">Add</button>
+  </div>
 
-    <ul id="task-list"></ul>
+  <ul id="task-list"></ul>
 
-    <script>
-        const input = document.getElementById("task-input"); 
-        const addBtn = document.getElementById("add-btn"); 
-        const taskList = document.getElementById("task-list"); 
-        const tasks = ["Task1", "Task2", "Task3"]; 
+  <script>
+    const input = document.getElementById("task-input");
+    const addBtn = document.getElementById("add-btn");
+    const taskList = document.getElementById("task-list");
 
-        addBtn.addEventListener("click", function () {
-            const taskText = input.value; 
+    addBtn.addEventListener("click", function () {
+      const taskText = input.value;
 
-            if (taskText !== "") {
-                const li = document.createElement("li"); 
-                li.textContent = taskText;
-                taskList.appendChild(li); 
-                input.value = ""; 
-            }
-        });  
-    </script>
+      if (taskText !== "") {
+        const li = document.createElement("li");
+
+        li.textContent = taskText;
+
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete";
+        delBtn.classList.add("delete-btn");
+
+        delBtn.addEventListener("click", function () {
+          taskList.removeChild(li);
+        });
+
+        li.appendChild(delBtn);
+        taskList.appendChild(li);
+
+        input.value = "";
+      }
+    }); 
+
+  </script>
 </body>
 </html>
