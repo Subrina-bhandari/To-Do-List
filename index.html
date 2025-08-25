@@ -14,14 +14,8 @@
       padding-top: 50px;
     }
 
-    h1 {
-      margin-bottom: 20px;
-    }
-
-    .container {
-      display: flex;
-      gap: 10px;
-    }
+    h1 { margin-bottom: 20px; }
+    .container { display: flex; gap: 10px; }
 
     input {
       padding: 10px;
@@ -39,9 +33,7 @@
       border-radius: 5px;
     }
 
-    .btn:hover {
-      background-color: #d46a6a;
-    }
+    .btn:hover { background-color: #d46a6a; }
 
     #task-list {
       width: 100%;
@@ -71,9 +63,7 @@
       border-radius: 5px;
     }
 
-    .delete-btn:hover {
-      background-color: darkred;
-    }
+    .delete-btn:hover { background-color: darkred; }
   </style>
 </head>
 <body>
@@ -91,29 +81,44 @@
     const addBtn = document.getElementById("add-btn");
     const taskList = document.getElementById("task-list");
 
-    addBtn.addEventListener("click", function () {
-      const taskText = input.value;
+    let tasks = JSON.parse(localStorage.getItem("task"));
+    if (!tasks) {
+      tasks = []; 
+    }
 
-      if (taskText !== "") {
+    function renderTasks() {
+      taskList.innerHTML = ""; 
+      tasks.forEach((task, index) => {
         const li = document.createElement("li");
-
-        li.textContent = taskText;
+        li.textContent = task;
 
         const delBtn = document.createElement("button");
         delBtn.textContent = "Delete";
         delBtn.classList.add("delete-btn");
 
         delBtn.addEventListener("click", function () {
-          taskList.removeChild(li);
+          tasks.splice(index, 2); 
+          localStorage.setItem("tasks", JSON.stringify(tasks)); 
+          renderTasks(); 
         });
 
         li.appendChild(delBtn);
         taskList.appendChild(li);
+      });
+    }
 
-        input.value = "";
+    addBtn.addEventListener("click", function () {
+      const taskText = input.value.trim();
+
+      if (taskText !== "") {
+        tasks.push(taskText); 
+        localStorage.setItem("tasks", JSON.stringify(tasks)); 
+        renderTasks(); 
+        input.value = ""; 
       }
-    }); 
+    });
 
+    renderTasks();
   </script>
 </body>
 </html>
